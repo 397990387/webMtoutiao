@@ -1,14 +1,11 @@
 <!--  -->
 <template>
-<div class='tt-nav'>
-  <div class="one">
-        <div class="tt-nav-title">{{title}}</div>
-    <div class="tt-nav-totiao">{{registered}}</div>
-  </div>
-   <div class="two">
-        <div class="tt-two-totiao">{{infringement}}</div>
-        <div class="tt-twoi-totiao">{{product}}</div>
-   </div>
+<div class='right-news'>
+    <h3>24小时热闻</h3>
+    <div class="news">
+        <span class="news-img"></span>
+        <span class="news-title"></span>
+    </div>
 </div>
 </template>
 
@@ -22,10 +19,7 @@ components: {},
 data() {
 //这里存放数据
 return {
-    title:"下载APP",
-    registered:"注册头条号",
-    infringement:"侵权投诉",
-    product:"头条产品"
+
 };
 },
 //监听属性 类似于data概念
@@ -34,6 +28,7 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
+
 
 },
 //生命周期 - 创建完成（可以访问当前this实例）
@@ -54,44 +49,5 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style lang='less' scoped >
-.tt-nav {
-    display: flex;
-    padding: 0px 10px 0px 10px ;
-    justify-content: space-between;
-    width: 100vw;
-    height: 40px;
-    background-color: black;
-    color:white;
 
-  .one {
-      display: flex;
-        text-align: center;
-        line-height: 40px;
-        font-weight: 200;
-    .tt-nav-title {
-      
-
-    }
-
-    .tt-nav-totiao {
-       
-        margin-left: 10px;
-    }
-  }
-
-  .two {
-      text-align: center;
-        line-height: 40px;
-        font-weight: 200;
-      display: flex;
-    .tt-two-totiao {
-        margin-right: 10px;
-    }
-    .tt-twoi-totiao{
-
-    }
-  }
-
-  
-}
 </style>
