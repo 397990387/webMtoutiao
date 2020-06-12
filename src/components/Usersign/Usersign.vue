@@ -1,22 +1,22 @@
 <!--  -->
 <template>
-<div class='tt-index-login'>
-     <p class="text">登录后可以保存您的浏览喜好、评论、收藏，并与APP同步，更可以发布微头条</p>
-    <div class="login-button" @click="registered">登陆</div>
-    <!-- <div>注册</div> -->
+<div class='registered'>
+    <div class="div">
+        <input type="text">
+        <input type="text">
+        <input type="checkbox">
+        <div class="registered-a">我已阅读并同意 用户协议 和隐私政策</div>
+    </div>
 </div>
 </template>
 
 <script>
-// import Usersign from "../Usersign/Usersign"
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 
 export default {
 //import引入的组件需要注入到对象中才能使用
-components: {
-    // Usersign
-},
+components: {},
 data() {
 //这里存放数据
 return {
@@ -29,9 +29,7 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-    registered:function(){
-        
-    }
+
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
@@ -51,32 +49,5 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style lang='less' scoped >
-.tt-index-login {
-    margin: auto;
-        border: 1px solid gray;
-        margin-top: 10px;
-      width: 350px;
-      height: 250px;
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      padding: 50px;
-      justify-content: space-around;
-  .text {
-     text-align: center;
-     font-size: 12px;
-     color: #777777;
-  }
 
-  .login-button {
-       border-radius: 5px;
-      font-size:16px;
-      background-color:var(--themeColor);
-      line-height: 40px;
-      text-align: center;
-      color:white;
-      height:40px;
-      width:250px;
-  }
-}
 </style>

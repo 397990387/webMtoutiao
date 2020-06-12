@@ -9,7 +9,13 @@
         <div class="content-left">
             <Nav></Nav>
         </div>
-        <div class="content-middel"></div>
+        <div class="content-middel">
+          <!-- 文本输入框开始 -->
+          <Myinput></Myinput>
+          <News></News>
+              
+          <!-- 文本输入框结束 -->
+        </div>
         <div class="content-right">
             <div class="content-input">
                <searchInput></searchInput>
@@ -19,9 +25,6 @@
             <div class="login">
             <Login></Login>
              </div>
-              <div class="news">
-            <News></News>
-        </div>
     </div>
         <!--  登入框-->
         <!--  -->
@@ -38,6 +41,8 @@ import Header from "../components/header/Header"
 import searchInput from "../components/searchInput/searchInput"
 import Nav from "../components/nav/Nav"
 import News from "../components/news/news"
+import Myinput from "../components/input/myinput"
+//  import Usersign from "../Usersign/Usersign"
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {
@@ -46,6 +51,7 @@ components: {
     Header, //头条
     searchInput, //搜索框
     News, //新闻
+    Myinput, //中间输入框
 },
 data() {
 //这里存放数据
