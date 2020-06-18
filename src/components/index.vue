@@ -13,7 +13,6 @@
           <!-- 文本输入框开始 -->
           <Myinput></Myinput>
           <News></News>
-              
           <!-- 文本输入框结束 -->
         </div>
         <div class="content-right">
@@ -42,7 +41,6 @@ import searchInput from "../components/searchInput/searchInput"
 import Nav from "../components/nav/Nav"
 import News from "../components/news/news"
 import Myinput from "../components/input/myinput"
-//  import Usersign from "../Usersign/Usersign"
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {

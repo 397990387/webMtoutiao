@@ -15,7 +15,7 @@
             <!-- 微头 开始-->
                 <div class="tab-conrtent-wb" v-show="activeTab=='weibo'" >
                     <!-- 多行文本 -->
-                        <textarea cols="30" rows="10" class="textarea" placeholder="做犀利,乃木娘翻抖"></textarea>
+                        <textarea cols="30" rows="10" v-model="tt_content" class="textarea" placeholder="做犀利,乃木娘翻抖"></textarea>
                     <div class="bottom">
                         <div class="left">
                             <div class="bottom-left" @click.stop="toggleUploadArea">图片</div>  
@@ -30,18 +30,21 @@
                                 </div>
                             </div>  
                         </div>  
-                            <div class="bottom-right">发布</div>
+                            <div class="bottom-right" @click.stop="publishTT">发布</div>
                     </div>
                 </div> 
                        
             <!-- 微头结束 -->
             <!-- 文章开始 -->
                     <div class="tab-conrtent-article" v-show="activeTab=='article'">
-                        <input type="text" name="" placeholder="请输入内容"/>
-                        <vue-editor v-model="richContent" class="rich-editor" />
+                        <input type="text" name=""   placeholder="请输入内容" v-model="article_title"  >
+                        <vue-editor v-model="richContent" class="rich-editor" 
+                            use-custom-image-handler
+                          @image-added="handleImageAdded"
+                        />
                          <div class="rich-publish">
-                             <div class="div1">发布</div>
-                             </div>
+                             <div class="div1" @click.stop="publishArticle">发布</div>
+                        </div>
                     </div>
             <!-- 文章结束 -->
         </div>
@@ -71,8 +74,11 @@ return {
         title:"写文章"
     }],
     activeTab:"weibo",
+    richContent:"",// 富文本的编辑器的内容
     showUploadImgArea:false,
-    uploadImgs:[]
+    uploadImgs:[],
+    tt_content: "", //微条
+    article_title:"" //文章
 
 };
 },
@@ -82,6 +88,56 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
+  //上传图片
+     handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+      console.log("vue2-editor上传图片");
+      var formData = new FormData();
+      formData.append("file", file);
+      this.$axios.post("/aliossUpload", formData).then(res => {
+        let url = res.url;
+        Editor.insertEmbed(cursorLocation, "image", url);
+        resetUploader();
+      });
+    },
+    publishArticle:function(){
+         if (!this.article_title || !this.richContent) {
+        this.$message({
+          msg: "标题或者内容不能为空"
+        });
+        return false;
+      }
+      this.$axios
+        .post("/createArticle", {
+          content: this.richContent,
+          img: "",
+          title: this.article_title
+        })
+        .then(res => {
+          this.$message({
+            msg: res.msg
+          });
+        });
+    },
+    publishTT:function(){
+           let content = this.tt_content;
+      if (!content) {
+        this.$message({
+          msg: "微头条内容不能为空"
+        });
+        return false;
+      }
+      this.$axios
+        .post("/createTT", {
+          content: content,
+          imgs: this.uploadImgs.join(",")
+        })
+        .then(res => {
+          this.$message({
+            msg: res.msg
+          });
+        })
+        .catch(err => err);
+    },
     //删除图片
     deleteImg:function(index){
         this.uploadImgs.splice(index,1)

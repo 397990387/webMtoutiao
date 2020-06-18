@@ -1,13 +1,14 @@
 <!--  -->
 <template>
-<div class='registered'>
-    <div class="div">
-        <input type="text">
-        <input type="text">
-        <input type="checkbox">
-        <div class="registered-a">我已阅读并同意 用户协议 和隐私政策</div>
+<div class='tt-article'>
+    <h1>{{article.title}}</h1>
+    <div>
+        <span>{{article.n_user.nickname}}</span>
+        <span>{{article.created_at}}</span>
     </div>
+    <div v-html="article.countent"></div>
 </div>
+
 </template>
 
 <script>
@@ -20,7 +21,7 @@ components: {},
 data() {
 //这里存放数据
 return {
-
+    article:{}
 };
 },
 //监听属性 类似于data概念
@@ -37,7 +38,16 @@ created() {
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
-
+//获取文章的数据
+console.log(this.$router)
+//拿到id
+let nid = this.$router.history.current.query.nid
+this.$axios.post("/getArticleById",{
+    nid:nid
+}).then(res=>{
+    this.article = res.article
+    console.log(this.article)
+})
 },
 beforeCreate() {}, //生命周期 - 创建之前
 beforeMount() {}, //生命周期 - 挂载之前

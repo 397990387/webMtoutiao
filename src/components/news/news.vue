@@ -1,18 +1,18 @@
 <!--  -->
 <template>
 <div class='right-news'>
-   <div class="refresh">点击刷新</div>
-   <div class="navs">
-       <div class="img">
-           <img src="http://wlanya.oss-cn-shenzhen.aliyuncs.com/2020_06_11/1c872634-9527-7d84-5da2-a72e5911078b.jpg" alt=""></div>
+   <div class="refresh" @click.stop="refresh">点击刷新</div>
+   <div class="navs" @click.stop="goToNewsDetail(article.nid)" v-for="article in articles" :key="article.nid"  >
+       <div class="img" v-if="article.img">
+           <img :src="article.img" alt></div>
        <div class="navs-tab">
-           <div class="navs-top">删除文章</div>
+           <div class="navs-top">{{article.title}}</div>
            <div class="navs-middle">
                <div class="middle-img">
-                   <img src="http://wlanya.oss-cn-shenzhen.aliyuncs.com/2020_06_11/1c872634-9527-7d84-5da2-a72e5911078b.jpg" alt=""></div>
-               <div class="middle-text">小菜比</div>
+                   <img :src="article.user.avator" alt=""></div>
+               <div class="middle-text">{{article.user.nickname}}</div>
            </div>
-           <div class="data">2020-06-12-13:30:51</div>
+           <div class="data">{{article.created_at}}</div>
        </div>
    </div>
 </div>
@@ -28,7 +28,8 @@ components: {},
 data() {
 //这里存放数据
 return {
-
+     lastid: 0, // 最新一条资讯的id
+      articles: [] // 文章列表
 };
 },
 //监听属性 类似于data概念
@@ -37,7 +38,22 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-
+  goToNewsDetail:function(nid){
+    console.log(nid)
+    this.$router.push({
+      path:"/NewsDetail",query:{
+        nid:nid
+      }
+    })
+  },
+refresh:function(){
+    this.$axios.post("/getArticles",{lastid:this.lastid}).then(res=>{
+        this.articles = (res.articles || []).concat(this.articles);
+        if(this.articles.length>0){
+            this.lastid = this.articles[0].nid
+        }
+    })
+}
 
 },
 //生命周期 - 创建完成（可以访问当前this实例）
@@ -46,7 +62,18 @@ created() {
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
-
+       this.$axios
+      .post("/getArticles", {
+        lastid: this.lastid
+      })
+      .then(res => {
+        this.articles = res.articles || [];
+        if (this.articles.length > 0) {
+          // 获取最后一条文章或头条的 id
+          this.lastid = this.articles[0].nid;
+        }
+      });
+  
 },
 beforeCreate() {}, //生命周期 - 创建之前
 beforeMount() {}, //生命周期 - 挂载之前
